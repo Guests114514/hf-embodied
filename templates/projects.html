@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>3. 最火热的具身智能项目</h1>
+<p class="sub">"火热"用 HF likes 排序（downloads 对新仓库普遍为 0，不能用）；
+GitHub stars 是第二个独立社区给的热度证据。</p>
+<table>
+  <tr><th>#</th><th>HF 仓库</th><th>类型</th><th>likes</th><th>GitHub</th>
+      <th>stars</th><th>关联 Space</th><th>备注 / 候选</th></tr>
+  {% for rank, repo_id, kind, likes, github, stars, n_spaces, spaces, cands, note in rows %}
+  <tr>
+    <td class="num">{{ rank }}</td>
+    <td><a class="repo" href="https://huggingface.co/{{ repo_id }}">{{ repo_id }}</a></td>
+    <td>{{ kind }}</td>
+    <td class="num">{{ likes }}</td>
+    <td>{% if github %}
+        <a class="repo" href="https://github.com/{{ github }}">{{ github }}</a>
+        {% else %}—{% endif %}</td>
+    <td class="num">{{ stars if stars is not none else '' }}</td>
+    <td>{% if spaces %}
+        {% for sp in spaces.split(',') %}
+          <a class="repo" href="https://huggingface.co/spaces/{{ sp }}">{{ sp.split('/')[-1] }}</a>
+          {% if not loop.last %}, {% endif %}
+        {% endfor %}{% endif %}</td>
+    <td><span class="tag">{{ note }}</span>
+        {% if cands %}<div class="tag">{{ cands }}</div>{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>2. 具身智能领域大V（个人账号，按粉丝数）</h1>
+<p class="sub">入选门槛：自有具身仓库 ≥ 1 或跨具身机构 ≥ 2；抓取 {{ s.crawled }} 份列表，
+其中触到 500 上限 {{ s.truncated }} 份。</p>
+<table>
+  <tr><th>#</th><th>账号</th><th>粉丝</th><th>发现路径</th><th>机构数</th>
+      <th>跨具身机构</th><th>具身仓库</th><th>具身 likes</th></tr>
+  {% for name, followers, source, n_orgs, n_robot, n_emb, emb_likes in people %}
+  <tr>
+    <td class="num">{{ loop.index }}</td>
+    <td><a class="repo" href="https://huggingface.co/{{ name }}">{{ name }}</a></td>
+    <td class="num">{{ followers }}</td>
+    <td>{{ source }}</td>
+    <td class="num">{{ n_orgs }}</td>
+    <td class="num">{{ n_robot }}</td>
+    <td class="num">{{ n_emb }}</td>
+    <td class="num">{{ emb_likes }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h1>机构榜（按具身 likes）</h1>
+<table>
+  <tr><th>#</th><th>机构</th><th>具身仓库</th><th>具身 likes</th></tr>
+  {% for author, n_emb, emb_likes in orgs %}
+  <tr><td class="num">{{ loop.index }}</td>
+      <td><a class="repo" href="https://huggingface.co/{{ author }}">{{ author }}</a></td>
+      <td class="num">{{ n_emb }}</td><td class="num">{{ emb_likes }}</td></tr>
+  {% endfor %}
+</table>
+
+<h1>关注网络</h1>
+<p class="sub">红=大V 种子，橙=二跳枢纽，绿边=互相关注。共 {{ s.nodes }} 节点 /
+{{ s.edges }} 条边，图上只画度数前 {{ 200 }} 个。</p>
+<img src="/static/graph.png" style="max-width:100%; border:1px solid #dfe3e8">
+
+<h1>度数统计</h1>
+{% for title, board in (("入度最多", by_in), ("出度最多", by_out), ("入度+出度最多", by_total)) %}
+<h3>{{ title }}</h3>
+<table>
+  <tr><th>账号</th><th>入度</th><th>出度</th><th>度</th></tr>
+  {% for name, ind, outd, total in board %}
+  <tr><td>{{ name }}</td><td class="num">{{ ind }}</td>
+      <td class="num">{{ outd }}</td><td class="num">{{ total }}</td></tr>
+  {% endfor %}
+</table>
+{% endfor %}
+{% endblock %}

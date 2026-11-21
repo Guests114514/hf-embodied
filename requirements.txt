@@ -1,0 +1,7 @@
+requests
+fastapi
+uvicorn[standard]
+jinja2
+networkx
+matplotlib
+scipy

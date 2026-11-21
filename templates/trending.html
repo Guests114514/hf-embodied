@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>1. 每日 trending 榜（快照日期 {{ run_date }}）</h1>
+<p class="sub">
+  具身标记 {{ n_emb }} / {{ board|length }} 条。
+  {% for d, n in days %}
+    <a href="/?day={{ d }}">{{ d }}（{{ n }}）</a>{% if not loop.last %} · {% endif %}
+  {% endfor %}
+  库内规模：仓库 {{ summary.repos }}（其中具身 {{ summary.embodied }}）·
+  账号 {{ summary.users }} · 关注边 {{ summary.edges }} / {{ summary.nodes }} 节点 ·
+  trending 天数 {{ summary.days }} · 累计抓取 {{ summary.runs }} 次 ·
+  已抓列表 {{ summary.crawled }} 份（触 500 上限 {{ summary.truncated }} 份）
+</p>
+<table>
+  <tr><th>#</th><th>仓库</th><th>类型</th><th>作者</th><th>likes</th>
+      <th>trending</th><th>downloads</th><th>pipeline_tag</th></tr>
+  {% for pos, repo_id, kind, author, likes, ts, dl, tag, is_emb in board %}
+  <tr class="{{ 'emb' if is_emb }}">
+    <td class="num">{{ pos }}</td>
+    <td><a class="repo" href="https://huggingface.co/{{ repo_id }}">{{ repo_id }}</a>
+        {% if is_emb %}<span class="tag">具身</span>{% endif %}</td>
+    <td>{{ kind }}</td>
+    <td>{{ author }}</td>
+    <td class="num">{{ likes }}</td>
+    <td class="num">{{ '%.1f'|format(ts) if ts is not none else '' }}</td>
+    <td class="num">{{ dl }}</td>
+    <td>{{ tag }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

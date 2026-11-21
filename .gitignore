@@ -1,0 +1,5 @@
+.venv/
+raw/
+hf.db
+.env
+__pycache__/
