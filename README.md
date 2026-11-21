@@ -45,7 +45,8 @@
   再算 `labels`。
 - `reset_edges.py` / `reset_projects.py` 只在需要重抓那两张表时用，工作流没有别的作用。
 - `check_db.py` 在一个内存库里执行 SCHEMA 并打印列名，用来验证"空库能不能建对"。
-  `repos.tags` 和 `users.source` 这两列都是它抓出来漏在 SCHEMA 之外的。
+  `repos.tags` 和 `users.source` 这两列都是它抓出来漏在 SCHEMA 之外的。表名从
+  `sqlite_master` 里读，所以 SCHEMA 新增一张表不用改这个脚本。
 - `draw.py` 输出 `static/graph.png`，网页只引用这个静态文件，不跑任何 JS。
 - `app.py` + `templates/` 四个页面，全部服务端渲染，一句 SQL 都不写在模板或路由里。
 - `raw/` 每次请求的原始 JSON 与 README 正文落盘，是全部结论的证据，也用来离线重算。
