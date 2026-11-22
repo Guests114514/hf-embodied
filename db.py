@@ -202,7 +202,7 @@ def upsert_project(conn, rank, repo_id, kind, likes, trending_score, github,
             note=excluded.note,
             run_date=excluded.run_date
         """,
-        (rank, repo_id, kind, likes, trending_score, github, github_stars,
+        (repo_id, rank, kind, likes, trending_score, github, github_stars,
          n_spaces, spaces, candidates, note, run_date),
     )
 DEG_SQL = """

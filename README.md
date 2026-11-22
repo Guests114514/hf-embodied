@@ -128,8 +128,9 @@ likes，把 `pyannote`、`deepseek-ai` 请了进来，换成 `labels` 的具身�
    误召主要是 `world model` 命名的视频生成模型（`black-forest-labs/flux-3-action-*`
    确实是 action-conditioned 视频模型，so101 / DROID 是真实机械臂与数据集，
    所以判为具身，但它不是机器人策略模型）。
-5. **gated 仓库读不到 README。** 匿名请求 raw 文件返回 401，20 个项目里 3 个因此
-   没有 GitHub 链接，`projects.note` 逐行记了原因。
+5. **gated 仓库读不到 README。** 匿名请求 raw 文件返回 401，20 个项目里 2 个因此没有
+   GitHub 链接，另外 3 个是 README 里确实没有 github.com 链接；这 5 个空值都在
+   `projects.note` 里逐行写明原因。
 6. **downloads 不能当热度。** 新建仓库普遍为 0，所以项目榜用 likes 排序。
 7. **"出度最多"不等于重要。** 出度榜第一名 `Ash444` 是 470 关注 / 17 粉丝，
    更像互关注册账号。入度和共同被关注才是有意义的中心性指标。
@@ -144,6 +145,6 @@ likes，把 `pyannote`、`deepseek-ai` 请了进来，换成 `labels` 的具身�
 | `users` | 358 | 264 个池内作者 + 94 个机构成员 |
 | `edges` | 5923 | 25 个账号的双向完整列表展开出的有向边，2492 个节点 |
 | `crawled` | 50 | 哪个账号的哪个方向抓全了；触 500 上限的 0 份 |
-| `projects` | 20 | 具身项目候选，14 行拿到 GitHub 链接，6 行在 `note` 里写明原因 |
+| `projects` | 20 | 具身项目候选，15 行拿到 GitHub 链接，5 行在 `note` 里写明原因 |
 
 同一份数字由 `db.summary()` 产生，直接印在首页顶部，不在这里手填第二遍。
